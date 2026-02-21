@@ -1,10 +1,14 @@
 package impl
 
-object WordTokenizer:
+trait Tokenizer:
+  def tokenize(lines: Iterator[String]): Iterator[String]
 
-  def fromStdin(): Iterator[String] =
-    import scala.language.unsafeNulls
-    scala.io.Source.stdin
-      .getLines()
-      .flatMap(_.split("(?U)[^\\p{Alpha}0-9']+"))
+object WordTokenizer extends Tokenizer:
+
+  private val SplitRegex =
+    "(?U)[^\\p{Alpha}0-9']+"
+
+  override def tokenize(lines: Iterator[String]): Iterator[String] =
+    lines
+      .flatMap(_.split(SplitRegex))
       .filter(_.nonEmpty)

@@ -1,24 +1,26 @@
 package main
 
-import impl.*
+import impl.{TopWordsLogic, WordTokenizer}
 import scala.io.Source
-import java.io.IOException
 
 object TopWordsMain:
-
   def main(args: Array[String]): Unit =
-    // defaults (per assignment)
-    val howMany = 10
-    val minLength = 6
-    val windowSize = 1000
+    val howMany   = args(0).toInt
+    val minLength = args(1).toInt
+    val windowSize = args(2).toInt
 
-    val observer = new ConsoleObserver
-    val logic = new TopWordsLogic(minLength, windowSize, howMany, observer)
+    val words =
+      WordTokenizer.tokenize(Source.stdin.getLines())
 
-    try
-      WordTokenizer
-        .fromStdin()
-        .foreach(logic.process)
-    catch
-      case _: IOException =>
-        () // SIGPIPE: exit quietly
+    val logic =
+      new TopWordsLogic(
+        minLength = minLength,
+        windowSize = windowSize,
+        howMany = howMany
+      )
+
+    logic.process(words).foreach { top =>
+      println(
+        top.map { case (w, n) => s"$w: $n" }.mkString(" ")
+      )
+    }
