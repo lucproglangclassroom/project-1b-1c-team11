@@ -1,11 +1,10 @@
 package impl
-
 class TopWordsLogic(
   minLength: Int,
   windowSize: Int,
   howMany: Int,
-  everyKSteps: Int = 10,
-  minFrequency: Int = 3
+  everyKSteps: Int,
+  minFrequency: Int
 ):
 
   private case class State(
@@ -19,6 +18,7 @@ class TopWordsLogic(
       .map(_.toLowerCase)
       .filter(_.length >= minLength)
       .scanLeft(State(Vector.empty, Map.empty, 0)) { (state, word) =>
+
         val newWindow = state.window :+ word
 
         val (finalWindow, removed) =
@@ -43,7 +43,7 @@ class TopWordsLogic(
 
         State(finalWindow, dec, state.steps + 1)
       }
-      .filter(_.window.size >= windowSize)          
+      .filter(_.window.size == windowSize)
       .filter(_.steps % everyKSteps == 0)
       .map { state =>
         state.counts.toSeq
