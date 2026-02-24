@@ -1,0 +1,9 @@
+[info] welcome to sbt 1.9.5 (Microsoft Java 25.0.1)
+[info] loading settings for project project-1b-1c-team11-build from plugins.sbt ...
+[info] loading project definition from /workspaces/project-1b-1c-team11/project
+[info] loading settings for project project-1b-1c-team11 from build.sbt,scala.sbt ...
+[info] set current project to topwords (in build file:/workspaces/project-1b-1c-team11/)
+[info] compiling 1 Scala source to /workspaces/project-1b-1c-team11/target/scala-3.7.4/classes ...
+[info] done compiling
+[info] running (fork) main.TopWordsMain 10 6 1000
+[success] Total time: 6 s, completed Feb 21, 2026, 1:33:08 AM
